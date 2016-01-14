@@ -197,4 +197,29 @@ class AndroidController extends Controller
 
         $historyuser->save();
     }
+
+    public function syncdata()
+    {
+        $sync = Input::get('Sync');
+
+        if($sync)
+        {
+            $response["error"]="false";
+            return json_encode($response);
+
+            $EquipmentDetails = Equipment::all();
+
+            foreach($EquipmentDetails as $i => $equip){
+                $response["Equipment"][$index]["Ecode"] = $equip->Ecode;
+                $response["Equipment"][$index]["Value"] = $equip->Name;
+            }
+
+            $MaintainenceDetails = Maintainence::all();
+
+            foreach ($MaintainenceDetails as $index => $Maintain) {
+                $response["Maintainence"][$index]["Ecode"] = $Maintain->Ecode;
+                $response["Maintainence"][$index]["Value"] = $Maintain->Name; 
+            } 
+        }
+    }
 }
